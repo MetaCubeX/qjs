@@ -68,7 +68,7 @@ func JsFuncArgsToGo(jsArgs []*Value, fnType reflect.Type) ([]reflect.Value, erro
 
 	if fnType.IsVariadic() {
 		fixedArgs := Min(numGoArgs-1, numJSArgs)
-		for i := range fixedArgs {
+		for i := 0; i < fixedArgs; i++ {
 			goVal, err := JsArgToGo(jsArgs[i], fnType.In(i))
 			if err != nil {
 				return nil, newArgConversionErr(i, err)
@@ -88,7 +88,7 @@ func JsFuncArgsToGo(jsArgs []*Value, fnType reflect.Type) ([]reflect.Value, erro
 
 	// Limit JS args to Go args count to avoid index out of bounds
 	argsToProcess := Min(numJSArgs, numGoArgs)
-	for i := range argsToProcess {
+	for i := 0; i < argsToProcess; i++ {
 		goVal, err := JsArgToGo(jsArgs[i], fnType.In(i))
 		if err != nil {
 			return nil, newArgConversionErr(i, err)
@@ -166,7 +166,7 @@ func CreateNonNilSample(argType reflect.Type) any {
 func createDummyFunction(funcType reflect.Type) any {
 	fn := reflect.MakeFunc(funcType, func(_ []reflect.Value) []reflect.Value {
 		results := make([]reflect.Value, funcType.NumOut())
-		for i := range funcType.NumOut() {
+		for i := 0; i < funcType.NumOut(); i++ {
 			results[i] = reflect.Zero(funcType.Out(i))
 		}
 

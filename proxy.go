@@ -6,7 +6,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/tetratelabs/wazero/api"
+	"github.com/metacubex/wazero/api"
 )
 
 // ProxyRegistry stores Go functions that can be called from JavaScript.
@@ -245,7 +245,7 @@ func retrieveGoResources(
 func readArgsFromWasmMem(mem api.Memory, argc uint32, argv uint32) []uint64 {
 	args := make([]uint64, argc)
 
-	for i := range argc {
+	for i := uint32(0); i < argc; i++ {
 		// Calculate the offset for the i-th argument
 		offset := argv + (i * 8)
 		data, _ := mem.Read(offset, 8)

@@ -371,7 +371,7 @@ func (tracker *Tracker[T]) processEmbeddedFields(
 	rtype reflect.Type,
 	rval reflect.Value,
 ) error {
-	for i := range rtype.NumField() {
+	for i := 0; i < rtype.NumField(); i++ {
 		field := rtype.Field(i)
 		jsonIgnore := field.Tag.Get("json") == "-"
 
@@ -446,7 +446,7 @@ func (tracker *Tracker[T]) processRegularFields(
 	rtype reflect.Type,
 	rval reflect.Value,
 ) error {
-	for i := range rtype.NumField() {
+	for i := 0; i < rtype.NumField(); i++ {
 		field := rtype.Field(i)
 
 		if !field.IsExported() || field.Anonymous {
@@ -493,7 +493,7 @@ func (tracker *Tracker[T]) addStructMethodsToObject(
 	rtype reflect.Type,
 	rval reflect.Value,
 ) error {
-	for i := range rtype.NumMethod() {
+	for i := 0; i < rtype.NumMethod(); i++ {
 		method := rtype.Method(i)
 		methodValue := rval.Method(i)
 
@@ -520,7 +520,7 @@ func (tracker *Tracker[T]) arrayLikeToJS(
 ) (*Value, error) {
 	arr := c.NewArray()
 
-	for i := range rval.Len() {
+	for i := 0; i < rval.Len(); i++ {
 		elem := rval.Index(i)
 
 		jsElem, err := tracker.toJsValue(c, elem.Interface())

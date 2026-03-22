@@ -767,7 +767,7 @@ func TestMem_EdgeCases(t *testing.T) {
 				expectedData := make([][]byte, numAllocs)
 
 				// Create multiple allocations with unique data
-				for i := range numAllocs {
+				for i := 0; i < numAllocs; i++ {
 					ptrs[i] = util.allocatePtr(allocSize)
 
 					testData := make([]byte, allocSize)
@@ -781,7 +781,7 @@ func TestMem_EdgeCases(t *testing.T) {
 				}
 
 				// Verify data integrity across all allocations
-				for i := range numAllocs {
+				for i := 0; i < numAllocs; i++ {
 					readData, err := util.runtime.Mem().Read(ptrs[i], allocSize)
 					require.NoError(t, err)
 					assert.Equal(t, expectedData[i], readData)

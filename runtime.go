@@ -8,9 +8,9 @@ import (
 	"runtime/debug"
 	"sync"
 
-	"github.com/tetratelabs/wazero"
-	"github.com/tetratelabs/wazero/api"
-	wsp1 "github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
+	"github.com/metacubex/wazero"
+	"github.com/metacubex/wazero/api"
+	wsp1 "github.com/metacubex/wazero/imports/wasi_snapshot_preview1"
 )
 
 //go:embed qjs.wasm

@@ -395,7 +395,7 @@ func TestJsArrayBufferToGo(t *testing.T) {
 			jsCode: `(() => { const buf = new ArrayBuffer(1024); const view = new Uint8Array(buf); for(let i=0; i<1024; i++) view[i] = i % 256; return buf; })()`,
 			expected: func() []byte {
 				b := make([]byte, 1024)
-				for i := range 1024 {
+				for i := 0; i < 1024; i++ {
 					b[i] = byte(i % 256)
 				}
 				return b

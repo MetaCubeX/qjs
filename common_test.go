@@ -164,7 +164,7 @@ type EmbeddedConcurrencyStruct struct {
 // TestFieldMapperDoubleCheckLocking tests the double-check locking pattern.
 func TestFieldMapperDoubleCheckLocking(t *testing.T) {
 	const numAttempts = 100
-	for range numAttempts {
+	for i := 0; i < numAttempts; i++ {
 		fm := qjs.NewFieldMapper()
 		structType := reflect.TypeOf(ConcurrencyTestStruct{})
 
@@ -176,7 +176,7 @@ func TestFieldMapperDoubleCheckLocking(t *testing.T) {
 		startBarrier.Add(1)
 		wg.Add(numGoroutines)
 
-		for i := range numGoroutines {
+		for i := 0; i < numGoroutines; i++ {
 			go func(id int) {
 				defer wg.Done()
 

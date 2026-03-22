@@ -59,7 +59,7 @@ func CreateGoFuncSignature(fnType reflect.Type) string {
 	parts := []string{"func("}
 	params := []string{}
 
-	for i := range fnType.NumIn() {
+	for i := 0; i < fnType.NumIn(); i++ {
 		paramType := fnType.In(i)
 		if fnType.IsVariadic() && i == fnType.NumIn()-1 {
 			params = append(params, "..."+GetGoTypeName(paramType.Elem()))
@@ -78,7 +78,7 @@ func CreateGoFuncSignature(fnType reflect.Type) string {
 		}
 
 		returns := []string{}
-		for i := range fnType.NumOut() {
+		for i := 0; i < fnType.NumOut(); i++ {
 			returns = append(returns, GetGoTypeName(fnType.Out(i)))
 		}
 
@@ -139,7 +139,7 @@ func IsConvertibleToJs(rType reflect.Type, visited map[reflect.Type]bool, detail
 
 		return nil
 	case reflect.Struct:
-		for i := range rType.NumField() {
+		for i := 0; i < rType.NumField(); i++ {
 			field := rType.Field(i)
 			jsonTagName, _, _ := strings.Cut(field.Tag.Get("json"), ",")
 

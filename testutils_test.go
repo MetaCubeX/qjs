@@ -5,7 +5,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"slices"
 	"strings"
 	"testing"
 
@@ -67,6 +66,15 @@ func extractErr[T any](_ T, err error) error {
 	return err
 }
 
+func slicesContains[S ~[]E, E comparable](s S, v E) bool {
+	for i := range s {
+		if v == s[i] {
+			return true
+		}
+	}
+	return false
+}
+
 func fileContent(file string) string {
 	content := must(os.ReadFile(file))
 	return string(content)
@@ -80,7 +88,7 @@ func glob(path string, exts ...string) ([]string, error) {
 				return err
 			}
 			if !info.IsDir() {
-				if slices.Contains(exts, filepath.Ext(path)) {
+				if slicesContains(exts, filepath.Ext(path)) {
 					files = append(files, path)
 				}
 			}
@@ -320,7 +328,7 @@ func runModeModuleTests(t *testing.T, tests []modeModuleTest, isScript bool) {
 				)
 				defer val.Free()
 				if !test.wantError {
-					require.NoError(t, err)
+					require.NoError(t, err, moduleMainFile)
 				}
 				test.expect(val, err)
 				return

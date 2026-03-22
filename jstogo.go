@@ -627,7 +627,7 @@ func createJsFunctionHandler(
 	args []reflect.Value,
 ) (results []reflect.Value) {
 	results = make([]reflect.Value, fnType.NumOut())
-	for i := range fnType.NumOut() {
+	for i := 0; i < fnType.NumOut(); i++ {
 		results[i] = reflect.Zero(fnType.Out(i))
 	}
 
@@ -701,14 +701,14 @@ func convertArgsToJS(
 		variadicSlice := args[numFixedArgs]
 
 		// Convert fixed arguments
-		for i := range numFixedArgs {
+		for i := 0; i < numFixedArgs; i++ {
 			if err := convertArg(args[i].Interface(), i); err != nil {
 				return nil, err
 			}
 		}
 
 		// Convert variadic arguments
-		for i := range variadicSlice.Len() {
+		for i := 0; i < variadicSlice.Len(); i++ {
 			elem := variadicSlice.Index(i)
 			if err := convertArg(elem.Interface(), numFixedArgs+i); err != nil {
 				return nil, err

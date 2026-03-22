@@ -148,7 +148,7 @@ func (fm *FieldMapper) processFields(
 	seen map[string]bool,
 	fieldMap map[string]FieldPath,
 ) {
-	for i := range structType.NumField() {
+	for i := 0; i < structType.NumField(); i++ {
 		field := structType.Field(i)
 		fieldIndices := append(append([]int{}, indexPrefix...), i)
 
@@ -366,7 +366,7 @@ func (ac *JsArrayToGoConverter[T]) Convert() (T, error) {
 func (ac *JsArrayToGoConverter[T]) convertToInterface(jsArray *Array, jsLen int64) (T, error) {
 	result := make([]any, 0, jsLen)
 
-	for i := range jsLen {
+	for i := int64(0); i < jsLen; i++ {
 		jsElem := jsArray.Get(i)
 
 		goElem, convErr := toGoValue[any](ac.tracker, jsElem)
@@ -395,7 +395,7 @@ func (ac *JsArrayToGoConverter[T]) convertToSlice(jsArray *Array, jsLen int64) (
 	elemType := ac.targetType.Elem()
 	sliceValue := reflect.MakeSlice(ac.targetType, 0, int(jsLen))
 
-	for i := range jsLen {
+	for i := int64(0); i < jsLen; i++ {
 		jsElem := jsArray.Get(i)
 		elemSample := reflect.New(elemType).Elem().Interface()
 		goElem, convErr := toGoValue(ac.tracker, jsElem, elemSample)
@@ -430,7 +430,7 @@ func (ac *JsArrayToGoConverter[T]) convertToArray(jsArray *Array, jsLen int64) (
 		return ac.sample, fmt.Errorf("JS array/set length (%d) exceeds Go array length (%d)", jsLen, goArrayLen)
 	}
 
-	for i := range jsLen {
+	for i := int64(0); i < jsLen; i++ {
 		jsElem := jsArray.Get(i)
 		elemSample := reflect.New(elemType).Elem().Interface()
 		goElem, convErr := toGoValue(ac.tracker, jsElem, elemSample)
@@ -773,7 +773,7 @@ func VerifyGoFunc(fnType reflect.Type, sample any) error {
 	}
 
 	// Validate that all return values are convertible to JS
-	for i := range fnType.NumOut() {
+	for i := 0; i < fnType.NumOut(); i++ {
 		err := IsConvertibleToJs(fnType.Out(i), make(map[reflect.Type]bool), "func return")
 		if err != nil {
 			return err
@@ -781,7 +781,7 @@ func VerifyGoFunc(fnType reflect.Type, sample any) error {
 	}
 
 	// Validate that all parameters are convertible from JS
-	for i := range fnType.NumIn() {
+	for i := 0; i < fnType.NumIn(); i++ {
 		err := IsConvertibleToJs(fnType.In(i), make(map[reflect.Type]bool), "func param")
 		if err != nil {
 			return fmt.Errorf("parameter %d error: %w", i, err)

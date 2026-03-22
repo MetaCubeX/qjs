@@ -5,7 +5,7 @@ import (
 	"math"
 	"sync"
 
-	"github.com/tetratelabs/wazero/api"
+	"github.com/metacubex/wazero/api"
 )
 
 // Mem provides a safe interface for WebAssembly memory operations.
@@ -41,7 +41,7 @@ func (m *Mem) UnpackPtr(packedPtr uint64) (uint32, uint32) {
 
 	// Reconstruct the packed value from little-endian bytes
 	packed := uint64(0)
-	for i := range PackedPtrSize {
+	for i := 0; i < PackedPtrSize; i++ {
 		packed |= uint64(packedBytes[i]) << (i * 8)
 	}
 

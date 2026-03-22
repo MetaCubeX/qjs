@@ -3,7 +3,6 @@ package qjs_test
 import (
 	"errors"
 	"math/big"
-	"slices"
 	"testing"
 	"unsafe"
 
@@ -757,7 +756,7 @@ func TestValueType(t *testing.T) {
 
 			actualType := val.Type()
 			validTypes := append([]string{tc.expectedType}, tc.allowedTypes...)
-			matched := slices.Contains(validTypes, actualType)
+			matched := slicesContains(validTypes, actualType)
 
 			assert.True(t, matched,
 				"Code '%s' expected type in %v but got '%s'",

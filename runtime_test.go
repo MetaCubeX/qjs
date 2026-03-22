@@ -312,7 +312,7 @@ func TestConcurrentRuntimeUsage(t *testing.T) {
 		const numWorkers = 20
 		var wg sync.WaitGroup
 
-		for i := range numWorkers {
+		for i := 0; i < numWorkers; i++ {
 			wg.Add(1)
 			go func(workerID int) {
 				defer wg.Done()
@@ -569,13 +569,13 @@ func TestPoolConcurrentAccess(t *testing.T) {
 		}
 
 		// Launch concurrent goroutines
-		for i := range numThreads {
+		for i := 0; i < numThreads; i++ {
 			go executeInGoroutine(i)
 		}
 
 		// Verify all goroutines completed successfully
 		successCount := 0
-		for range numThreads {
+		for i := 0; i < numThreads; i++ {
 			if <-results {
 				successCount++
 			}
@@ -612,7 +612,7 @@ func TestPoolCallGoFuncFromJs(t *testing.T) {
 
 	var wg sync.WaitGroup
 	concurrentRoutines := 10
-	for i := range concurrentRoutines {
+	for i := 0; i < concurrentRoutines; i++ {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
