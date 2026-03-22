@@ -1,4 +1,4 @@
-module github.com/fastschema/qjs
+module github.com/metacubex/qjs
 
 go 1.20
 

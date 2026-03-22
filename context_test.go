@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/fastschema/qjs"
+	"github.com/metacubex/qjs"
 	"github.com/stretchr/testify/assert"
 )
 
